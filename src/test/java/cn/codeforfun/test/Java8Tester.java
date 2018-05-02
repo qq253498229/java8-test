@@ -3,6 +3,9 @@ package cn.codeforfun.test;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @apiNote http://www.runoob.com/java/java8-streams.html
+ */
 public class Java8Tester {
 
   public static void main(String args[]) {
