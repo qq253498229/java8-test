@@ -1,86 +1,90 @@
 package cn.codeforfun.test;
 
+import lombok.extern.log4j.Log4j;
+import org.junit.Test;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * @apiNote http://www.runoob.com/java/java8-streams.html
  */
+@Log4j
 public class Java8Tester {
-
-  public static void main(String args[]) {
-    System.out.println("使用 Java 7: ");
+  @Test
+  public void test() {
+    log.info("使用 Java 7: ");
 
     // 计算空字符串
     List<String> strings = Arrays.asList("abc", "", "bc", "efg", "abcd", "", "jkl");
-    System.out.println("列表: " + strings);
+    log.info("列表: " + strings);
     long count = getCountEmptyStringUsingJava7(strings);
 
-    System.out.println("空字符数量为: " + count);
+    log.info("空字符数量为: " + count);
     count = getCountLength3UsingJava7(strings);
 
-    System.out.println("字符串长度为 3 的数量为: " + count);
+    log.info("字符串长度为 3 的数量为: " + count);
 
     // 删除空字符串
     List<String> filtered = deleteEmptyStringsUsingJava7(strings);
-    System.out.println("筛选后的列表: " + filtered);
+    log.info("筛选后的列表: " + filtered);
 
     // 删除空字符串，并使用逗号把它们合并起来
     String mergedString = getMergedStringUsingJava7(strings, ", ");
-    System.out.println("合并字符串: " + mergedString);
+    log.info("合并字符串: " + mergedString);
     List<Integer> numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
 
     // 获取列表元素平方数
     List<Integer> squaresList = getSquares(numbers);
-    System.out.println("平方数列表: " + squaresList);
+    log.info("平方数列表: " + squaresList);
     List<Integer> integers = Arrays.asList(1, 2, 13, 4, 15, 6, 17, 8, 19);
 
-    System.out.println("列表: " + integers);
-    System.out.println("列表中最大的数 : " + getMax(integers));
-    System.out.println("列表中最小的数 : " + getMin(integers));
-    System.out.println("所有数之和 : " + getSum(integers));
-    System.out.println("平均数 : " + getAverage(integers));
-    System.out.println("随机数: ");
+    log.info("列表: " + integers);
+    log.info("列表中最大的数 : " + getMax(integers));
+    log.info("列表中最小的数 : " + getMin(integers));
+    log.info("所有数之和 : " + getSum(integers));
+    log.info("平均数 : " + getAverage(integers));
+    log.info("随机数: ");
 
     // 输出10个随机数
     Random random = new Random();
 
     for (int i = 0; i < 10; i++) {
-      System.out.println(random.nextInt());
+      log.info(random.nextInt());
     }
 
-    System.out.println("使用 Java 8: ");
-    System.out.println("列表: " + strings);
+    log.info("使用 Java 8: ");
+    log.info("列表: " + strings);
 
     count = strings.stream().filter(String::isEmpty).count();
-    System.out.println("空字符串数量为: " + count);
+    log.info("空字符串数量为: " + count);
 
     count = strings.stream().filter(string -> string.length() == 3).count();
-    System.out.println("字符串长度为 3 的数量为: " + count);
+    log.info("字符串长度为 3 的数量为: " + count);
 
     filtered = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.toList());
-    System.out.println("筛选后的列表: " + filtered);
+    log.info("筛选后的列表: " + filtered);
 
     mergedString = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.joining(", "));
-    System.out.println("合并字符串: " + mergedString);
+    log.info("合并字符串: " + mergedString);
 
     squaresList = numbers.stream().map(i -> i * i).distinct().collect(Collectors.toList());
-    System.out.println("Squares List: " + squaresList);
-    System.out.println("列表: " + integers);
+    log.info("Squares List: " + squaresList);
+    log.info("列表: " + integers);
 
     IntSummaryStatistics stats = integers.stream().mapToInt((x) -> x).summaryStatistics();
 
-    System.out.println("列表中最大的数 : " + stats.getMax());
-    System.out.println("列表中最小的数 : " + stats.getMin());
-    System.out.println("所有数之和 : " + stats.getSum());
-    System.out.println("平均数 : " + stats.getAverage());
-    System.out.println("随机数: ");
+    log.info("列表中最大的数 : " + stats.getMax());
+    log.info("列表中最小的数 : " + stats.getMin());
+    log.info("所有数之和 : " + stats.getSum());
+    log.info("平均数 : " + stats.getAverage());
+    log.info("随机数: ");
 
     random.ints().limit(10).sorted().forEach(System.out::println);
 
     // 并行处理
     count = strings.parallelStream().filter(String::isEmpty).count();
-    System.out.println("空字符串的数量为: " + count);
+    log.info("空字符串的数量为: " + count);
   }
 
   private static int getCountEmptyStringUsingJava7(List<String> strings) {
